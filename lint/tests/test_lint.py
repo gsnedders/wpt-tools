@@ -26,19 +26,13 @@ CONSOLE:streams/resources/test-utils.js: 12
 *:resources/*
 """)
 
-    expected = {
-        '*.pdf': {
-            '*': {None},
-        },
+    expected_data = {
         '.gitmodules': {
             'INDENT TABS': {None},
         },
         'app-uri/*': {
             'TRAILING WHITESPACE': {None},
             'INDENT TABS': {None},
-        },
-        'resources/*': {
-            '*': {None},
         },
         'streams/resources/test-utils.js': {
             'CONSOLE': {12},
@@ -51,4 +45,7 @@ CONSOLE:streams/resources/test-utils.js: 12
             'CR AT EOL': {None},
         },
     }
-    assert parse_whitelist(input_buffer) == expected
+    expected_ignored = {"*.pdf", "resources/*"}
+    data, ignored = parse_whitelist(input_buffer)
+    assert data == expected_data
+    assert ignored == expected_ignored
