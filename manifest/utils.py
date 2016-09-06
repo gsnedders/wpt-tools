@@ -11,6 +11,16 @@ def rel_path_to_url(rel_path, url_base="/"):
         url_base += "/"
     return url_base + rel_path.replace(os.sep, "/")
 
+def url_to_rel_path(url, url_base="/"):
+    assert url[0] == "/"
+    if url_base[0] != "/":
+        url_base = "/" + url_base
+    if url_base[-1] != "/":
+        url_base += "/"
+    if not url.startswith(url_base):
+        raise ValueError("url not within url_base")
+    return url[len(url_base):].replace("/", os.sep)
+
 def is_blacklisted(url):
     for item in blacklist:
         if item == "/":
